@@ -1,13 +1,15 @@
-import React from 'react'
+import React ,{ useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Users() {
-    const [users, setUsers] = React.useState([{
+    const [users, setUsers] = useState([{
         name: "John Doe", Email:"john@gmail.com" , Age: 20 ,
     }]);
     
   return (
-    <div className='d-flex vh-100 bg-primary justify-content-center align-item-center'>
-      <div className="w-50 bg-white rounded p-3 ">
+    <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
+      <div className='w-50 bg-white rounded p-3'>
+        <Link to="/create" className='btn btn-success'> Add +</Link>
         <table className="table">
             <thead>
                 <tr>
@@ -24,7 +26,10 @@ function Users() {
                             <td>{user.name}</td>
                             <td>{user.Email}</td>
                             <td>{user.Age}</td>
-                            <td><button>edit</button><button>Delete</button></td>
+                            <td>
+                                <Link to="/update" className='btn btn-success'>Edit</Link>
+                                <button>Delete</button>
+                            </td>
                         </tr>
                         )
                     })
