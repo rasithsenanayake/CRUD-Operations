@@ -1,10 +1,25 @@
-import React ,{ useState } from 'react';
+import axios from 'axios';
+import React ,{ useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Users() {
-    const [users, setUsers] = useState([{
-        name: "John Doe", Email:"john@gmail.com" , Age: 20 ,
-    }]);
+    const [users, setUsers] = useState([])
+    
+
+    useEffect (() => {
+        axios.get ("http://localhost:3001")
+        .then (result => setUsers (result.data))
+        .catch (error => console.log (error))
+    }, [])
+    
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:3001/deleteUser/${id}`)
+        .then(result => {
+            console.log(result)
+            setUsers(users.filter(user => user._id !== id))
+        })
+        .catch(error => console.log(error))
+    }
     
   return (
     <div className='d-flex vh-100 bg-primary justify-content-center align-items-center'>
@@ -21,14 +36,14 @@ function Users() {
             </thead>
             <tbody>
                 {
-                    users.map((user) => {
-                        return(<tr>
+                    users.map((user, index) => {
+                        return(<tr key={index}>
                             <td>{user.name}</td>
-                            <td>{user.Email}</td>
-                            <td>{user.Age}</td>
+                            <td>{user.email}</td>
+                            <td>{user.age}</td>
                             <td>
-                                <Link to="/update" className='btn btn-success'>Edit</Link>
-                                <button>Delete</button>
+                                <Link to={`/update/${user._id}`} className='btn btn-success'>Edit</Link>
+                                <button className='btn btn-danger' onClick={() => handleDelete(user._id)}>Delete</button>
                             </td>
                         </tr>
                         )
