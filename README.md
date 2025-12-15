@@ -1,50 +1,55 @@
 # CRUD-Operations
 
-A basic CRUD (Create, Read, Update, Delete) operations website for managing user records. This application allows you to add, view, edit, and delete user information including name, email, and age.
+A full-stack MERN (MongoDB, Express, React, Node.js) CRUD application for managing user records. This application allows you to create, read, update, and delete user information including name, email, and age with real-time updates.
 
 ## Features
 
-- **Create**: Add new user records with name, email, and age
-- **Read**: View all user records in a table format
-- **Update**: Edit existing user information
-- **Delete**: Remove user records from the database
+- ✅ **Create**: Add new user records with name, email, and age
+- ✅ **Read**: View all user records in a responsive table
+- ✅ **Update**: Edit existing user information with pre-filled forms
+- ✅ **Delete**: Remove user records instantly with real-time UI updates
+- 🎨 **Bootstrap UI**: Clean and responsive design
+- 🚀 **Real-time Updates**: Instant feedback without page reloads
+- 🔄 **Client-side Routing**: Seamless navigation with React Router
 
 ## Tech Stack
 
 ### Frontend
-- React.js
-- React Router DOM
-- Bootstrap 5
-- Vite
+- **React.js** - UI library
+- **React Router DOM** - Client-side routing
+- **Axios** - HTTP client for API requests
+- **Bootstrap 5** - CSS framework for styling
+- **Vite** - Fast build tool and dev server
 
 ### Backend
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- CORS
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - MongoDB ODM (Object Data Modeling)
+- **CORS** - Cross-origin resource sharing
 
 ## Installation
 
 ### Prerequisites
-- Node.js installed
-- MongoDB installed and running
+- Node.js (v14 or higher)
+- MongoDB installed and running locally
+- npm or yarn package manager
 
 ### Setup
 
-1. Clone the repository
+1. **Clone the repository**
 ```bash
 git clone https://github.com/rasithsenanayake/CRUD-Operations.git
 cd CRUD-Operations
 ```
 
-2. Install client dependencies
+2. **Install client dependencies**
 ```bash
 cd client
 npm install
 ```
 
-3. Install server dependencies
+3. **Install server dependencies**
 ```bash
 cd ../server
 npm install
@@ -52,57 +57,177 @@ npm install
 
 ## Running the Application
 
-1. Start MongoDB service (if not already running)
+### 1. Start MongoDB
+Make sure MongoDB is running on your system:
+```bash
+# Windows
+net start MongoDB
 
-2. Start the backend server
+# Mac/Linux
+sudo systemctl start mongod
+```
+
+### 2. Start the Backend Server
 ```bash
 cd server
 npm start
 ```
-Server runs on `http://localhost:3001`
+✅ Server runs on `http://localhost:3001`  
+Uses **nodemon** for auto-restart on file changes
 
-3. Start the frontend development server
+### 3. Start the Frontend Development Server
 ```bash
 cd client
 npm run dev
 ```
-Client runs on `http://localhost:5173`
+✅ Client runs on `http://localhost:5173`  
+Hot-reload enabled for instant updates
 
-## Usage
+## Usage Guide
 
-1. Navigate to `http://localhost:5173` in your browser
-2. Click "Add +" to create a new user
-3. Fill in the name, email, and age fields
-4. View all users in the table on the home page
-5. Click "Edit" to update user information
-6. Click "Delete" to remove a user record
+### Adding a User
+1. Navigate to `http://localhost:5173`
+2. Click the **"Add +"** button
+3. Fill in the form:
+   - Name (text)
+   - Email (email format)
+   - Age (number)
+4. Click **"Submit"**
+5. Automatically redirects to the home page showing the new user
+
+### Viewing Users
+- All users are displayed in a table on the home page
+- Shows Name, Email, Age, and Action buttons
+
+### Updating a User
+1. Click the **"Edit"** button next to any user
+2. Form auto-fills with current user data
+3. Modify the desired fields
+4. Click **"Update"**
+5. Redirects to home page with updated information
+
+### Deleting a User
+1. Click the **"Delete"** button next to any user
+2. User is immediately removed from the database
+3. Table updates in real-time without refresh
 
 ## Project Structure
 
 ```
 CRUD-Operations/
-├── client/          # React frontend
+├── client/                    # React Frontend
+│   ├── public/
 │   ├── src/
-│   │   ├── App.jsx
-│   │   ├── Users.jsx
-│   │   ├── CreateUser.jsx
-│   │   └── UpdateUser.jsx
-│   └── package.json
-└── server/          # Express backend
-    ├── index.js
+│   │   ├── App.jsx           # Main app with routing
+│   │   ├── Users.jsx         # Home page - displays all users
+│   │   ├── CreateUser.jsx    # Form to add new user
+│   │   ├── UpdateUser.jsx    # Form to edit existing user
+│   │   ├── main.jsx          # React entry point
+│   │   └── App.css           # Styles
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+│
+└── server/                    # Express Backend
     ├── modals/
-    │   └── Users.js
+    │   └── Users.js          # Mongoose schema for User
+    ├── index.js              # Express server and API routes
     └── package.json
 ```
 
 ## API Endpoints
 
-- `POST /CreateUser` - Create a new user
-- `GET /` - Get all users
-- `GET /getUser/:id` - Get user by ID
-- `PUT /updateUser/:id` - Update user by ID
-- `DELETE /deleteUser/:id` - Delete user by ID
+| Method | Endpoint | Description | Request Body |
+|--------|----------|-------------|--------------|
+| `POST` | `/CreateUser` | Create a new user | `{name, email, age}` |
+| `GET` | `/` | Get all users | - |
+| `GET` | `/getUser/:id` | Get user by ID | - |
+| `PUT` | `/updateUser/:id` | Update user by ID | `{name, email, age}` |
+| `DELETE` | `/deleteUser/:id` | Delete user by ID | - |
+
+### Example API Calls
+
+**Create User:**
+```javascript
+POST http://localhost:3001/CreateUser
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "age": 25
+}
+```
+
+**Get All Users:**
+```javascript
+GET http://localhost:3001/
+```
+
+**Update User:**
+```javascript
+PUT http://localhost:3001/updateUser/676ae3f4c2e1234567890abc
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "age": 30
+}
+```
+
+**Delete User:**
+```javascript
+DELETE http://localhost:3001/deleteUser/676ae3f4c2e1234567890abc
+```
+
+## Database Schema
+
+**User Model (MongoDB):**
+```javascript
+{
+  _id: ObjectId,          // Auto-generated by MongoDB
+  name: String,           // User's full name
+  email: String,          // User's email address
+  age: Number            // User's age
+}
+```
+
+## How It Works
+
+### Data Flow
+```
+User Action → React Component → Axios HTTP Request → Express Route → 
+Mongoose Model → MongoDB → Response → Update React State → UI Update
+```
+
+### Key Technologies Explained
+
+- **React Hooks**: `useState` for state management, `useEffect` for data fetching, `useParams` for route parameters, `useNavigate` for programmatic navigation
+- **Axios**: Simplifies HTTP requests with automatic JSON parsing
+- **Mongoose Schema**: Validates data types and provides database methods
+- **CORS**: Enables frontend (port 5173) to communicate with backend (port 3001)
+- **React Router**: Creates a Single Page Application (SPA) with multiple routes
+
+## Troubleshooting
+
+### MongoDB Connection Error
+- Ensure MongoDB is running: `mongod --version`
+- Check connection string in `server/index.js`
+
+### Port Already in Use
+- Change port in `server/index.js` (default: 3001)
+- Check Vite config for frontend port (default: 5173)
+
+### CORS Errors
+- Verify `app.use(cors())` is present in `server/index.js`
+- Check that backend URL matches in frontend API calls
 
 ## License
 
 This project is open source and available for educational purposes.
+
+## Author
+
+**Rasith Senanayake**  
+GitHub: [@rasithsenanayake](https://github.com/rasithsenanayake)
